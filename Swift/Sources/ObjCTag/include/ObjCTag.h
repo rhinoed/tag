@@ -1,5 +1,5 @@
 //
-//  main.m
+//  Tag.h
 //  Tag
 //
 //  Created by James Berry on 10/25/13.
@@ -27,15 +27,40 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <TagName.h>
 
-#import "Tag.h"
+typedef NS_ENUM(int, OperationMode) {
+    OperationModeNone       = -1,
+    OperationModeUnknown    = 0,
+    OperationModeSet        = 's',
+    OperationModeAdd        = 'a',
+    OperationModeRemove     = 'r',
+    OperationModeMatch      = 'm',
+    OperationModeFind       = 'f',
+    OperationModeUsage      = 'u',
+    OperationModeList       = 'l',
+};
 
-int main(int argc, char * const argv[])
-{
-    @autoreleasepool {
-        // Tag* tag = [Tag new];
-        // CLI logic removed. Intended to be replaced by Swift code.
-    }
-    return 0;
-}
+typedef NS_ENUM(int, SearchScope) {
+    SearchScopeNone         = 0,
+    SearchScopeHome,
+    SearchScopeLocal,
+    SearchScopeNetwork,
+};
 
+@interface ObjCTag : NSObject
+
+@property (assign, nonatomic) OperationMode operationMode;
+@property (assign, nonatomic) SearchScope searchScope;
+
+@property (assign, nonatomic) BOOL displayAllFiles;     // Display all (hidden files)
+@property (assign, nonatomic) BOOL recurseDirectories;  // Enter/enumerate directories
+@property (assign, nonatomic) BOOL enterDirectories;    // Recursively process any directory we encounter
+
+@property (copy, nonatomic) NSSet<TagName *> *tags;
+@property (copy, nonatomic) NSArray* URLs;
+@property (copy, nonatomic) NSMutableArray<NSURL *>* Matched;
+
+- (void)performOperation;
+
+@end

@@ -1,8 +1,8 @@
 //
-//  main.m
+//  TagName.m
 //  Tag
 //
-//  Created by James Berry on 10/25/13.
+//  Created by James Berry on 11/1/13.
 //
 //  The MIT License (MIT)
 //
@@ -26,16 +26,54 @@
 //  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
+#import "TagName.h"
 
-#import "Tag.h"
+@implementation TagName
 
-int main(int argc, char * const argv[])
+- (instancetype)initWithTag:(NSString*)tag
 {
-    @autoreleasepool {
-        // Tag* tag = [Tag new];
-        // CLI logic removed. Intended to be replaced by Swift code.
+    self = [super init];
+    if (self)
+    {
+        _visibleName = [tag copy];
+        _comparableName = [_visibleName lowercaseString];
     }
-    return 0;
+    return self;
 }
 
+
+- (BOOL)isEqualToTagName:(TagName*)tagName
+{
+    return [self.comparableName isEqualToString:tagName.comparableName];
+}
+
+
+- (BOOL)isEqual:(id)obj
+{
+    if (obj == self)
+        return YES;
+    if (!obj || ![obj isKindOfClass:[self class]])
+        return NO;
+    return [self isEqualToTagName:obj];
+}
+
+
+- (NSUInteger)hash
+{
+    return [self.comparableName hash];
+}
+
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    return self;
+}
+
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"TagName<%@>", _visibleName];
+}
+
+
+@end

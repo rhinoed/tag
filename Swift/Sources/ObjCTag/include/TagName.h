@@ -1,8 +1,8 @@
 //
-//  main.m
+//  TagName.h
 //  Tag
 //
-//  Created by James Berry on 10/25/13.
+//  Created by James Berry on 11/1/13.
 //
 //  The MIT License (MIT)
 //
@@ -28,14 +28,17 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Tag.h"
+// Items of this class are compared for equality in a case-insensitive fashion,
+// but retain their original case in visibleName. TagName objects are used
+// in forming sets of tags.
 
-int main(int argc, char * const argv[])
-{
-    @autoreleasepool {
-        // Tag* tag = [Tag new];
-        // CLI logic removed. Intended to be replaced by Swift code.
-    }
-    return 0;
-}
+@interface TagName : NSObject<NSCopying>
 
+- (instancetype)initWithTag:(NSString*)tag;
+
+@property (readonly) NSString* visibleName;
+@property (readonly) NSString* comparableName;
+
+- (BOOL)isEqualToTagName:(TagName*)tagName;
+
+@end

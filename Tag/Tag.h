@@ -40,14 +40,6 @@ typedef NS_ENUM(int, OperationMode) {
     OperationModeList       = 'l',
 };
 
-typedef NS_OPTIONS(int, OutputFlags) {
-    OutputFlagsName             = (1 << 0),
-    OutputFlagsTags             = (1 << 1),
-    OutputFlagsGarrulous        = (1 << 2),
-    OutputFlagsSlashDirectory   = (1 << 3),
-    OutputFlagsNulTerminate     = (1 << 4)
-};
-
 typedef NS_ENUM(int, SearchScope) {
     SearchScopeNone         = 0,
     SearchScopeHome,
@@ -58,7 +50,6 @@ typedef NS_ENUM(int, SearchScope) {
 @interface Tag : NSObject
 
 @property (assign, nonatomic) OperationMode operationMode;
-@property (assign, nonatomic) OutputFlags outputFlags;
 @property (assign, nonatomic) SearchScope searchScope;
 
 @property (assign, nonatomic) BOOL displayAllFiles;     // Display all (hidden files)
@@ -68,9 +59,6 @@ typedef NS_ENUM(int, SearchScope) {
 @property (copy, nonatomic) NSSet* tags;
 @property (copy, nonatomic) NSArray* URLs;
 
-@property (copy, nonatomic) NSDictionary* tagColors;
-
-- (void)parseCommandLineArgv:(char * const *)argv argc:(int)argc;
 - (void)performOperation;
 
 @end

@@ -48,19 +48,20 @@
         Use NSPredicate for both find and match?
  */
 
-#import "Tag.h"
+#import "ObjCTag.h"
 #import "TagName.h"
 
 // This constant doesn't seem to be defined in MDItem.h, so we define it here
 NSString* const kMDItemUserTags = @"kMDItemUserTags";
 
 
-@interface Tag ()
+@interface ObjCTag ()
+
 @end
 
 
 
-@implementation Tag
+@implementation ObjCTag
 
 - (void)performOperation
 {
@@ -320,6 +321,8 @@ NSString* const kMDItemUserTags = @"kMDItemUserTags";
             )
         {
             // Match found
+            // append url to self Matched
+            [self.Matched addObject:URL];
         }
     }];
 }
@@ -336,7 +339,8 @@ NSString* const kMDItemUserTags = @"kMDItemUserTags";
         if (![URL getResourceValue:&tagArray forKey:NSURLTagNamesKey error:&error])
              NSLog(@"Error getting tags from %@: %@", URL, error);
         
-        // Emit
+        // Emit convert tagArray to NSSet
+        self.tags = [self tagSetFromTagArray:tagArray];
     }];
 }
 
